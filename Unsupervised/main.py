@@ -25,6 +25,17 @@ def filter_150(data):
     data['dollar_volume'] = data['dollar_volume'].unstack('ticker').rolling(5*12).mean().stack()
     data['dollar_vol_rank'] = (data.groupby('date')['dollar_volume'].rank(ascending=False))
     return data[data['dollar_vol_rank'] < 150].drop(['dollar_volume', 'dollar_vol_rank'], axis=1)
+
+def calculate_returns(data_df):
+    outlier_cutoff = 0.005
+    lags = [1,2,3,6,9,12]
+    for lag in lags:
+        data_df[f'return_{lag}m'] = (data_df['adj_close']
+                                     .pct_change(lag)
+                                     .pipe(lambda x: x.clip(lower=x.quantile(outlier_cutoff), upper=x.quantile(1-outlier_cutoff)))
+                                     .add(1).pow(1/lag).sub(1))
+    return data_df
+
     
 def main():
     sp500_df = get_SP500()
@@ -33,6 +44,7 @@ def main():
     sp500_df['macd'] = sp500_df.groupby(level=1, group_keys=False)['adj close'].apply(calculate_macd)
     aggregate_data = aggregate(sp500_df=sp500_df)
     aggregate_data = filter_150(aggregate_data)
+    aggregate_data = aggregate_data.groupby(level=1,group_keys=False).apply(calculate_returns).dropna()
     print(aggregate_data)
     # sp500_df = aggregate(sp500_df=sp500_df)
     # print(sp500_df)
