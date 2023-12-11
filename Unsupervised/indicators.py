@@ -15,7 +15,7 @@ class IndicatorCalculator:
         self.sp500_df = sp500_df
         
 
-# Calculating garman-klass volatility
+    # Calculating garman-klass volatility
     def calculate_gk_volatility(self, sp500_df):
         if sp500_df.empty:
             # print("Reached here 2")
