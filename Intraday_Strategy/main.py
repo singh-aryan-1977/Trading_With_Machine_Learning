@@ -5,12 +5,6 @@ from intraday import Intraday_Model
 import matplotlib.ticker as mtick
 import numpy as np
 
-
-def predict_volatility(x,p,q):
-    best_model = arch_model(y=x*100,p=p,q=q).fit(update_freq=5, disp='off')
-    variance_forecast = best_model.forecast(horizon=1).variance.iloc[-1,0]    
-    return variance_forecast
-
 def main():
     daily_df = pd.read_csv("Intraday_Strategy/simulated_daily_data.csv")
     # print(daily_df)
