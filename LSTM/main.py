@@ -57,6 +57,8 @@ def main():
     dataset = data_df.values
 
     training_data_len = math.ceil(len(dataset)*0.8)
+    
+    #Creating scaler for data
     scaler = MinMaxScaler(feature_range=(0,1))
     x_train, y_train, scaled_data = preprocess(dataset, training_data_len, scaler)
     
