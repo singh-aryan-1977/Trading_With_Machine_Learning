@@ -1,18 +1,11 @@
 from download import *
-import pandas as pd
 import numpy as np
-import pandas_datareader.data as web
 import matplotlib.pyplot as plt
-import statsmodels.api as sm
-from statsmodels.regression.rolling import RollingOLS
 import datetime as dt
-from sklearn.cluster import KMeans
 import yfinance as yf
-from pypfopt.efficient_frontier import EfficientFrontier
-from pypfopt import risk_models
-from pypfopt import expected_returns
 from indicators import IndicatorCalculator
 from unsupervised import UnsupervisedModel
+plt.style.use('ggplot')
 
 
 def plot_strategy_returns(stock, portfolio_df):
@@ -25,14 +18,18 @@ def plot_strategy_returns(stock, portfolio_df):
     portfolio_cumulative_return = np.exp(np.log1p(portfolio_df).cumsum())-1
     portfolio_cumulative_return[:'2023-09-29'].plot(figsize=(16,6))
     plt.show()
+    return
 
 def main():
+    print("Getting sp500 data")
     sp500_df = get_SP500()
+    print("Finished getting sp500 data")
     indicator_calculator = IndicatorCalculator(sp500_df=sp500_df)
     sp500_df = indicator_calculator.calculate_simple_indicators(sp500_df=sp500_df)
     unsupervised_model = UnsupervisedModel(sp500_df=sp500_df)
     portfolio_df = unsupervised_model.learn()
     plot_strategy_returns('MSFT', portfolio_df=portfolio_df)
+    return
 
 if __name__ == "__main__":
     main()

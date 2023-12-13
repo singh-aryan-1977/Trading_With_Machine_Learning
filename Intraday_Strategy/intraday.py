@@ -1,9 +1,7 @@
 
-import matplotlib.pyplot as plt
 from arch import arch_model
 import pandas as pd
 import pandas_ta
-import matplotlib.ticker as mtick
 import numpy as np
 
 class Intraday_Model():

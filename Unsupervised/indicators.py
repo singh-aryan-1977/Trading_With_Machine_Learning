@@ -8,14 +8,12 @@ from statsmodels.regression.rolling import RollingOLS
 import datetime as dt
 import yfinance as yf
 import pandas_ta
-from download import *
 
 class IndicatorCalculator:
     def __init__(self, sp500_df):
         self.sp500_df = sp500_df
         
 
-    # Calculating garman-klass volatility
     def calculate_gk_volatility(self, sp500_df):
         if sp500_df.empty:
             # print("Reached here 2")
@@ -24,6 +22,7 @@ class IndicatorCalculator:
         gk_vol_second_part = (2*np.log(2)-1)*(np.log(sp500_df['adj close']) - np.log(sp500_df['open']))**2
         sp500_df['garman_klass_volatility'] = gk_vol_first_part - gk_vol_second_part
         return sp500_df
+
 
     def calculate_rsi(self, sp500_df):
         if sp500_df.empty:
