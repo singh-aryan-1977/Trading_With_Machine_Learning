@@ -1,16 +1,8 @@
 from download import *
-import pandas as pd
 import numpy as np
-import pandas_datareader.data as web
 import matplotlib.pyplot as plt
-import statsmodels.api as sm
-from statsmodels.regression.rolling import RollingOLS
 import datetime as dt
-from sklearn.cluster import KMeans
 import yfinance as yf
-from pypfopt.efficient_frontier import EfficientFrontier
-from pypfopt import risk_models
-from pypfopt import expected_returns
 from indicators import IndicatorCalculator
 from unsupervised import UnsupervisedModel
 
