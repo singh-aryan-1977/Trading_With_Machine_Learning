@@ -32,11 +32,9 @@ def plot(train, validation, ticker):
     plt.show() 
     return
 
-def preprocess(dataset):
-    training_data_len = math.ceil(len(dataset)*0.8)
-    
+
+def preprocess(dataset, training_data_len, scaler): 
     #Scaling the data
-    scaler = MinMaxScaler(feature_range=(0,1))
     scaled_data = scaler.fit_transform(dataset)
     
     #Creating training data set
@@ -51,7 +49,7 @@ def preprocess(dataset):
     x_train, y_train = np.array(x_train), np.array(y_train)
     x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1))
     
-    return x_train, y_train
+    return x_train, y_train, scaled_data
 
 def main():
     ticker = 'MSFT'
@@ -59,7 +57,11 @@ def main():
     data_df= df.filter(['Close'])
     dataset = data_df.values
 
-    x_train, y_train = preprocess(dataset)
+    training_data_len = math.ceil(len(dataset)*0.8)
+    
+    #Creating scaler for data
+    scaler = MinMaxScaler(feature_range=(0,1))
+    x_train, y_train, scaled_data = preprocess(dataset, training_data_len, scaler)
     
     lstm_predictor = LSTMModel(input_shape=(x_train.shape[1],1))    
     lstm_predictor.forward(x_train, y_train, epochs=1, batch_size=1)
