@@ -32,7 +32,8 @@ def plot(train, validation, ticker):
     plt.show() 
     return
 
-def preprocess(dataset, training_data_len, scaler):    #
+
+def preprocess(dataset, training_data_len, scaler): 
     #Scaling the data
     scaled_data = scaler.fit_transform(dataset)
     
