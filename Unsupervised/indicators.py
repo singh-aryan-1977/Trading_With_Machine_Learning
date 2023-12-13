@@ -1,12 +1,5 @@
 from download import *
-import pandas as pd
 import numpy as np
-import pandas_datareader.data as web
-import matplotlib.pyplot as plt
-import statsmodels.api as sm
-from statsmodels.regression.rolling import RollingOLS
-import datetime as dt
-import yfinance as yf
 import pandas_ta
 
 class IndicatorCalculator:
