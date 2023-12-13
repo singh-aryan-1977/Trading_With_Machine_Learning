@@ -23,7 +23,10 @@ def plot_strategy_returns(stock, portfolio_df):
 def main():
     print("Getting sp500 data")
     sp500_df = get_SP500()
+    print(sp500_df.shape)
     print("Finished getting sp500 data")
+    print(sp500_df)
+    print(sp500_df.loc['2023-12-05'])
     indicator_calculator = IndicatorCalculator(sp500_df=sp500_df)
     sp500_df = indicator_calculator.calculate_simple_indicators(sp500_df=sp500_df)
     unsupervised_model = UnsupervisedModel(sp500_df=sp500_df)
