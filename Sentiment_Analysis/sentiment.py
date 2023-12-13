@@ -15,12 +15,12 @@ class Sentiment_Model():
         .transform(lambda x: x.rank(ascending=False)))
         return aggregate_data
     
-    def analyze(self):
+    def analyze(self, factor):
         self.sentiment_df['date'] = pd.to_datetime(self.sentiment_df['date'])
         self.sentiment_df = self.sentiment_df.set_index(['date', 'symbol'])
-        self.sentiment_df['engagement_ratio'] = self.sentiment_df['twitterComments']/self.sentiment_df['twitterLikes']
+        self.sentiment_df['engagementRatio'] = self.sentiment_df['twitterComments']/self.sentiment_df['twitterLikes']
         self.sentiment_df = self.sentiment_df[(self.sentiment_df['twitterLikes']>20)&(self.sentiment_df['twitterComments']>10)]
-        aggregate_data = self.filter_by_metric('twitterComments')
+        aggregate_data = self.filter_by_metric(factor)
         
         filtered_df = aggregate_data[aggregate_data['rank']<6].copy()
         filtered_df = filtered_df.reset_index(level=1)

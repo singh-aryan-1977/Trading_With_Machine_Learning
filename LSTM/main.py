@@ -10,7 +10,7 @@ from lstm import LSTMModel
 from keras.optimizers import Adam
 from keras.layers import Dense, LSTM
 import matplotlib.pyplot as plt
-plt.style.use('fivethirtyeight')
+plt.style.use('ggplot')
 
 def get_stock_data(ticker):
     yf.pdr_override()

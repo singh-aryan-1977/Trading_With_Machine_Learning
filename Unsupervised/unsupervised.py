@@ -12,6 +12,8 @@ from pypfopt.efficient_frontier import EfficientFrontier
 from pypfopt import risk_models
 from pypfopt import expected_returns
 from indicators import *
+plt.style.use('ggplot')
+
 
 class UnsupervisedModel():
     def __init__(self, sp500_df):
@@ -96,7 +98,6 @@ class UnsupervisedModel():
         return initial_centroids
 
     def plot(self, aggregate_data):
-        plt.style.use('ggplot')
         for i in aggregate_data.index.get_level_values('date').unique().tolist():
             level = aggregate_data.xs(i, level=0)
             plt.title(f'Date {i}')
